@@ -13,5 +13,6 @@ struct NODE
 void insert_at_beginning(NODE** head, uint8_t data);
 void print_list(NODE* head);
 void free_list(NODE** head);
+static NODE* create_new_node(uint8_t data);
 
 #endif

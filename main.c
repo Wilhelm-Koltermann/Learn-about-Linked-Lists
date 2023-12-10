@@ -6,6 +6,7 @@ void main()
 {
     NODE* head = NULL;
     print_list(head);
+    free_list(&head);
     insert_at_beginning(&head, 8);
     insert_at_beginning(&head, 22);
     insert_at_beginning(&head, 3);
