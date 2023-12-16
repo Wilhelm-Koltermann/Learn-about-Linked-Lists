@@ -4,17 +4,20 @@
 
 void main()
 {
-    NODE* head = NULL;
-    print_list(head);
-    free_list(&head);
-    
-    insert_at_beginning(&head, 8);
-    insert_at_beginning(&head, 22);
-    insert_at_beginning(&head, 3);
-    insert_at_beginning(&head, 25);
-    insert_at_beginning(&head, 6);
+    LinkedList mylist = {NULL, NULL};
+    print_list(&mylist);
+    free_list(&mylist);
 
-    print_list(head);
-    free_list(&head);
+    insert_at_beginning(&mylist, 2);
+    insert_at_end(&mylist, 1);
+    insert_at_beginning(&mylist, 4);
+    insert_at_beginning(&mylist, 3);
+    insert_at_beginning(&mylist, 5);
+    insert_at_end(&mylist, 7);
+
+    //printf("%u\n", mylist.tail->next);
+    
+    print_list(&mylist);
+    free_list(&mylist);
     return;
 }
