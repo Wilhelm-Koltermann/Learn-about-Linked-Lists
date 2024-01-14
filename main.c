@@ -11,6 +11,7 @@ void main()
     insert_at_end(&mylist, 45);
     insert_at_beginning(&mylist, 2);
     insert_at_end(&mylist, 1);
+    remove_element_at_loc(&mylist, 2);
     insert_at_beginning(&mylist, 4);
     insert_at_beginning(&mylist, 3);
     insert_at_beginning(&mylist, 5);

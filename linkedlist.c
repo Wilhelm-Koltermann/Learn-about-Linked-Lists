@@ -104,7 +104,7 @@ void print_list(LinkedList* mylist)
     
     if(LISTS_CONSISTENCY_EMPTY_OK == list_status)
     { 
-        printf("The list is empty: HEAD --> NULL <-- TAIL\n");
+        printf("\nThe list is empty: HEAD --> NULL <-- TAIL\n");
         return;
     }
 
@@ -173,7 +173,7 @@ void free_list(LinkedList* mylist)
 
     if(LISTS_CONSISTENCY_EMPTY_OK == list_status)
     { 
-        printf("This list is already empty, there is nothing to free here.\n");
+        printf("\nThis list is already empty, there is nothing to free here.\n");
         return;
     }
 
@@ -187,5 +187,68 @@ void free_list(LinkedList* mylist)
 
     mylist->head = NULL;
     mylist->tail = NULL;
+    return;
+}
+
+void remove_element_at_loc(LinkedList* mylist, uint8_t loc)
+{
+    uint8_t list_status = check_lists_consistency(mylist);
+    if(LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status)
+    { 
+        return; 
+    }
+    else if(LISTS_CONSISTENCY_EMPTY_OK == list_status)
+    {
+        printf("\nList is empty, nothing to remove here.\n");
+        return;
+    }
+    else if(0 == loc)
+    {
+        printf("\nCan't retrieve element from list at loc == 0\n");
+        return;
+    }
+
+    NODE* to_remove = NULL;
+    if(1 == loc)
+    {
+        to_remove = mylist->head;
+        mylist->head = mylist->head->next;
+
+        if(to_remove == mylist->tail)
+        {
+            mylist->tail = mylist->head;
+        }
+        free(to_remove);
+        return;
+    }
+
+    uint8_t element_counter = 1;
+    for(NODE* current = mylist->head; current != NULL; current = current->next)
+    {
+        if( (loc - 1) == element_counter)
+        {
+            to_remove = current->next;
+            //if loc is one greater than lists length to_remove would be NULL
+            if(NULL == to_remove)
+            {
+                break;
+            }
+
+            if(to_remove == mylist->tail)
+            {
+                mylist->tail = current;
+            }
+
+            current->next = current->next->next;
+
+            free(to_remove);
+            return;
+        }
+
+        element_counter += 1;
+
+    }
+
+    printf("\nGiven loc %u is greater than lists length.\n", loc);
     return;
 }

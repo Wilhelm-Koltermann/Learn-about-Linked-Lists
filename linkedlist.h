@@ -26,5 +26,6 @@ void insert_at_beginning(LinkedList* mylist, uint8_t data);
 void print_list(LinkedList* mylist);
 void free_list(LinkedList* mylist);
 void insert_at_end(LinkedList* mylist, uint8_t data);
+void remove_element_at_loc(LinkedList* mylist, uint8_t loc);
 
 #endif
