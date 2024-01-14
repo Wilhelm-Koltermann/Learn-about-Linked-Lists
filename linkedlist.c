@@ -72,8 +72,9 @@ void insert_at_end(LinkedList* mylist, uint8_t data)
 
     if( LISTS_CONSISTENCY_EMPTY_OK == list_status )
     {
-        mylist->head;
-        mylist->tail;
+        mylist->head = new;
+        mylist->tail = new;
+        return;
     }
 
     mylist->tail->next = new;

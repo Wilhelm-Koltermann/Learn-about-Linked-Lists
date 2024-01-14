@@ -8,6 +8,7 @@ void main()
     print_list(&mylist);
     free_list(&mylist);
 
+    insert_at_end(&mylist, 45);
     insert_at_beginning(&mylist, 2);
     insert_at_end(&mylist, 1);
     insert_at_beginning(&mylist, 4);
