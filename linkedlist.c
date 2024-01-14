@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-static NODE* create_new_node(uint8_t data)
+static NODE *create_new_node(uint8_t data)
 {
-    NODE* new = (NODE*) malloc(sizeof(NODE));
-    if(NULL == new)
+    NODE *new = (NODE *)malloc(sizeof(NODE));
+    if (NULL == new)
     {
         printf("Something went wrong when allocating memory for the new node!\n");
         return new;
@@ -16,17 +16,17 @@ static NODE* create_new_node(uint8_t data)
     return new;
 }
 
-static uint8_t check_lists_consistency(LinkedList* mylist)
+static uint8_t check_lists_consistency(LinkedList *mylist)
 {
-    if( NULL == mylist->head && NULL == mylist->tail )
+    if (NULL == mylist->head && NULL == mylist->tail)
     {
-        return LISTS_CONSISTENCY_EMPTY_OK;   
+        return LISTS_CONSISTENCY_EMPTY_OK;
     }
-    else if ( NULL != mylist->head && NULL != mylist->tail )
+    else if (NULL != mylist->head && NULL != mylist->tail)
     {
         return LISTS_CONSISTENCY_POPULATED_OK;
     }
-    else if ( NULL == mylist->head && NULL != mylist->tail )
+    else if (NULL == mylist->head && NULL != mylist->tail)
     {
         printf("HEAD --> NULL but TAIL not");
         return LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK;
@@ -38,17 +38,23 @@ static uint8_t check_lists_consistency(LinkedList* mylist)
     }
 }
 
-void insert_at_beginning(LinkedList* mylist, uint8_t data)
+void insert_at_beginning(LinkedList *mylist, uint8_t data)
 {
     uint8_t list_status = check_lists_consistency(mylist);
-    if(LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status){ return; }
+    if (LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status)
+    {
+        return;
+    }
 
-    NODE* new = create_new_node(data);
-    if(NULL == new){ return; }
-    
+    NODE *new = create_new_node(data);
+    if (NULL == new)
+    {
+        return;
+    }
+
     // if list is empty let head and tail point to the new node
     // as the new node already points to NULL its next pointer doesn't have to be updated
-    if(NULL == mylist->head && NULL == mylist->tail)
+    if (NULL == mylist->head && NULL == mylist->tail)
     {
         mylist->head = new;
         mylist->tail = new;
@@ -62,15 +68,21 @@ void insert_at_beginning(LinkedList* mylist, uint8_t data)
     return;
 }
 
-void insert_at_end(LinkedList* mylist, uint8_t data)
+void insert_at_end(LinkedList *mylist, uint8_t data)
 {
     uint8_t list_status = check_lists_consistency(mylist);
-    if(LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status){ return; }
+    if (LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status)
+    {
+        return;
+    }
 
-    NODE* new = create_new_node(data);
-    if(NULL == new){ return; }
+    NODE *new = create_new_node(data);
+    if (NULL == new)
+    {
+        return;
+    }
 
-    if( LISTS_CONSISTENCY_EMPTY_OK == list_status )
+    if (LISTS_CONSISTENCY_EMPTY_OK == list_status)
     {
         mylist->head = new;
         mylist->tail = new;
@@ -85,11 +97,11 @@ void insert_at_end(LinkedList* mylist, uint8_t data)
 static uint8_t determine_number_of_decimals(uint8_t data)
 {
 
-    if(0 == data/10)
+    if (0 == data / 10)
     {
         return 1;
     }
-    else if(0 == data/100)
+    else if (0 == data / 100)
     {
         return 2;
     }
@@ -97,24 +109,27 @@ static uint8_t determine_number_of_decimals(uint8_t data)
     return 3;
 }
 
-void print_list(LinkedList* mylist)
+void print_list(LinkedList *mylist)
 {
     uint8_t list_status = check_lists_consistency(mylist);
-    if(LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status){ return; }
-    
-    if(LISTS_CONSISTENCY_EMPTY_OK == list_status)
-    { 
+    if (LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status)
+    {
+        return;
+    }
+
+    if (LISTS_CONSISTENCY_EMPTY_OK == list_status)
+    {
         printf("\nThe list is empty: HEAD --> NULL <-- TAIL\n");
         return;
     }
 
     uint16_t white_space_counter = 0;
     printf("\nHEAD\n|\nv\n");
-    for(NODE* current = mylist->head; current != NULL; current = current->next)
+    for (NODE *current = mylist->head; current != NULL; current = current->next)
     {
         printf("|%u|-->", current->data);
 
-        if(current != mylist->tail)
+        if (current != mylist->tail)
         {
             uint8_t number_of_decimals = determine_number_of_decimals(current->data);
             switch (number_of_decimals)
@@ -133,15 +148,14 @@ void print_list(LinkedList* mylist)
                 break;
             }
         }
-        
     }
     printf("NULL\n");
 
-    for(uint8_t string_element_counter = 0; string_element_counter < TAIL_STRING_ELEMENTS; string_element_counter += 1)
+    for (uint8_t string_element_counter = 0; string_element_counter < TAIL_STRING_ELEMENTS; string_element_counter += 1)
     {
-        for(uint8_t i = 0; i < white_space_counter; i += 1)
+        for (uint8_t i = 0; i < white_space_counter; i += 1)
         {
-            //number of white spaces to insert to cover one printed list element
+            // number of white spaces to insert to cover one printed list element
             printf(" ");
         }
 
@@ -162,25 +176,27 @@ void print_list(LinkedList* mylist)
         }
     }
 
-
     return;
 }
 
-void free_list(LinkedList* mylist)
+void free_list(LinkedList *mylist)
 {
     uint8_t list_status = check_lists_consistency(mylist);
-    if(LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status){ return; }
+    if (LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status)
+    {
+        return;
+    }
 
-    if(LISTS_CONSISTENCY_EMPTY_OK == list_status)
-    { 
+    if (LISTS_CONSISTENCY_EMPTY_OK == list_status)
+    {
         printf("\nThis list is already empty, there is nothing to free here.\n");
         return;
     }
 
-    NODE* current = mylist->head;
-    while(current != NULL)
+    NODE *current = mylist->head;
+    while (current != NULL)
     {
-        NODE* temp_node = current;
+        NODE *temp_node = current;
         current = current->next;
         free(temp_node);
     }
@@ -190,31 +206,31 @@ void free_list(LinkedList* mylist)
     return;
 }
 
-void remove_element_at_loc(LinkedList* mylist, uint8_t loc)
+void remove_element_at_loc(LinkedList *mylist, uint8_t loc)
 {
     uint8_t list_status = check_lists_consistency(mylist);
-    if(LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status)
-    { 
-        return; 
+    if (LISTS_CONSISTENCY_TAIL_POPULATED_HEAD_NOT_NOK == list_status || LISTS_CONSISTENCY_HEAD_POPULATED_TAIL_NOT_NOK == list_status)
+    {
+        return;
     }
-    else if(LISTS_CONSISTENCY_EMPTY_OK == list_status)
+    else if (LISTS_CONSISTENCY_EMPTY_OK == list_status)
     {
         printf("\nList is empty, nothing to remove here.\n");
         return;
     }
-    else if(0 == loc)
+    else if (0 == loc)
     {
         printf("\nCan't retrieve element from list at loc == 0\n");
         return;
     }
 
-    NODE* to_remove = NULL;
-    if(1 == loc)
+    NODE *to_remove = NULL;
+    if (1 == loc)
     {
         to_remove = mylist->head;
         mylist->head = mylist->head->next;
 
-        if(to_remove == mylist->tail)
+        if (to_remove == mylist->tail)
         {
             mylist->tail = mylist->head;
         }
@@ -223,18 +239,18 @@ void remove_element_at_loc(LinkedList* mylist, uint8_t loc)
     }
 
     uint8_t element_counter = 1;
-    for(NODE* current = mylist->head; current != NULL; current = current->next)
+    for (NODE *current = mylist->head; current != NULL; current = current->next)
     {
-        if( (loc - 1) == element_counter)
+        if ((loc - 1) == element_counter)
         {
             to_remove = current->next;
-            //if loc is one greater than lists length to_remove would be NULL
-            if(NULL == to_remove)
+            // if loc is one greater than lists length to_remove would be NULL
+            if (NULL == to_remove)
             {
                 break;
             }
 
-            if(to_remove == mylist->tail)
+            if (to_remove == mylist->tail)
             {
                 mylist->tail = current;
             }
@@ -246,7 +262,6 @@ void remove_element_at_loc(LinkedList* mylist, uint8_t loc)
         }
 
         element_counter += 1;
-
     }
 
     printf("\nGiven loc %u is greater than lists length.\n", loc);
